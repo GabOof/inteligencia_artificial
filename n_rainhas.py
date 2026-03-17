@@ -1,3 +1,5 @@
+# Código que utiliza Steepest Hill Climbing para resolver o problema das N Rainhas, o algoritmo vai rodar até preencher todas as casas do tabuleiro.
+
 import copy
 def preencher_diagonais(tab, y, x):
     tab[y][x] = 2
@@ -75,7 +77,7 @@ while True:
     for i in range(len(tab)):
         for j in range(len(tab[0])):
             if tab[i][j] == 0: # se for 0 -> filho
-                filho = copy.deepcopy(tab)
+                filho = copy.deepcopy(tab) # cria um clone do pai
                 preencher_vertical_horizontal(filho, i, j)
                 preencher_diagonais(filho, i , j)
                 filho[i][j] = 2 
