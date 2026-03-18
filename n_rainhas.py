@@ -41,7 +41,6 @@ def preencher_diagonais(tab, y, x):
         if diagonais_preenchidas == [1,1,1,1]:
             break
 
-
 def preencher_vertical_horizontal(tab, y, x):
     #vertical
     for i in range(len(tab)):
@@ -56,12 +55,22 @@ def funcao_heuristica(tab):
         for j in range(len(tab[0])):
             if tab[i][j] == 0:
                 cont_vazia+=1
+    #verifica distância até a borda:
+    numero_rainhas =  contar_rainhas(tab)
     return cont_vazia
+
+def contar_rainhas(tab):
+    cont = 0
+    for i in range(len(tab)):
+        for j in range(len(tab[0])):
+            if tab[i][j] == 2:
+                cont+=1
+    return cont
 
 def printTab(tab):
     for i in range(len(tab)):
         print(tab[i])
-        
+
 tab = [[0,0,0,0,0,0,0,0],
        [0,0,0,0,0,0,0,0],
        [0,0,0,0,0,0,0,0],
@@ -70,26 +79,60 @@ tab = [[0,0,0,0,0,0,0,0],
        [0,0,0,0,0,0,0,0],
        [0,0,0,0,0,0,0,0],
        [0,0,0,0,0,0,0,0]]
- 
+
+tab16 = [[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]]
+
+tab4 = [[0,0,0,0],
+       [0,0,0,0],
+       [0,0,0,0],
+       [0,0,0,0]]
+
+tabuleiros = []
+n = 8 #numero de rainhas que se deseja posicionar
 while True:
-    maior_fe = 0
-    melhor_filho = None
     for i in range(len(tab)):
         for j in range(len(tab[0])):
             if tab[i][j] == 0: # se for 0 -> filho
                 filho = copy.deepcopy(tab) # cria um clone do pai
                 preencher_vertical_horizontal(filho, i, j)
                 preencher_diagonais(filho, i , j)
-                filho[i][j] = 2 
-                fe = funcao_heuristica(filho)
-                if fe >= maior_fe:
-                    maior_fe = fe
-                    melhor_filho = filho
+                filho[i][j] = 2
+                tabuleiros.append(filho)
+
+    #agora vamos posicionar rainhas em posições com ataque para diminuir
+    #encontra melhor filho na lista
+    maior_fe = 0
+    melhor_filho = None
+    indice_apagar = -1
+    for i in range(len(tabuleiros)):
+        fe = funcao_heuristica(tabuleiros[i])
+        if fe > maior_fe:
+            maior_fe = fe
+            melhor_filho = tabuleiros[i]
+            indice_apagar = i
+    del tabuleiros[indice_apagar]
     #depois do loop na matriz
     tab = melhor_filho
     print("Melhor filho selecionado:")
     printTab(tab)
-    print("fe",maior_fe)
-    if maior_fe == 0: #acabou preencheu tudo
+    nr = contar_rainhas(tab)
+    print("heurística:",maior_fe," rainhas:",nr)
+    #input("continuar")
+    if nr == n or len(tabuleiros)==0: #acabou preencheu tudo
+        printTab(tab)
         break
-
