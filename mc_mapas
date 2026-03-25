@@ -7,6 +7,9 @@ class Node:
     he = -1
     caminho = []
 
+def funcao_heuristica(dist_percorrida, dist_linha_reta):
+    return dist_percorrida + dist_linha_reta
+
 tab = [
     [0, 1, 3, 0, 5, 0, 0, 0],
     [0, 0, 4, 0, 0, 0, 0, 0],
@@ -19,3 +22,37 @@ tab = [
 ]
 
 dist = [0, 6, 2, 2, 1, 6, 5, 0]
+
+pai = Node()
+pai.indice = 0
+pai.distancia_percorrida = 0
+pai.caminho.append(0)
+estados = []
+
+while True:
+    for j in range(len(tab)):
+        if tab[pai.indice][j] > 0:
+            filho = Node()
+            filho.indice = j
+            filho.distancia_percorrida = pai.distancia_percorrida + tab[pai.indice][j]
+            filho.caminho = copy.deepcopy(pai.caminho)
+            filho.caminho.append(j)
+            filho.he = funcao_heuristica(filho.distancia_percorrida, dist[j])
+            estados.append(filho)
+
+    melhor_filho = estados[0]
+    menor_he = estados[0].he
+    indice_remover = 0
+    for i in range(1, len(estados)):
+        if menor_he > estados[i].he:
+            menor_he = estados[i].he
+            melhor_filho = estados[i]
+            indice_remover = i
+    print("melhor filho escolhido:", melhor_filho.caminho)
+    print("he:", melhor_filho.he)
+    del estados[indice_remover]
+
+    pai = melhor_filho
+
+    if pai.indice == len(tab) - 1:
+        break
