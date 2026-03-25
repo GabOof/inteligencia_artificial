@@ -1,18 +1,19 @@
 # Código que utiliza Steepest Hill Climbing para resolver o problema das N Rainhas, o algoritmo vai rodar até preencher todas as casas do tabuleiro.
 
 import copy
+
 def preencher_diagonais(tab, y, x):
     tab[y][x] = 2
     stop = False
-    de1x =  x
-    de1y =  y
-    de2x =  x
-    de2y =  y
-    dd1x =  x
-    dd1y =  y
-    dd2x =  x
-    dd2y =  y
-    diagonais_preenchidas = [0, 0, 0, 0] #conta as 4 direções das diagonais
+    de1x = x
+    de1y = y
+    de2x = x
+    de2y = y
+    dd1x = x
+    dd1y = y
+    dd2x = x
+    dd2y = y
+    diagonais_preenchidas = [0, 0, 0, 0]  # conta as 4 direções das diagonais
     while True:
         if de1x > 0 and de1y > 0:
             de1x -= 1
@@ -38,14 +39,14 @@ def preencher_diagonais(tab, y, x):
             tab[dd2y][dd2x] = 1
         else:
             diagonais_preenchidas[3] = 1
-        if diagonais_preenchidas == [1,1,1,1]:
+        if diagonais_preenchidas == [1, 1, 1, 1]:
             break
 
 def preencher_vertical_horizontal(tab, y, x):
-    #vertical
+    # vertical
     for i in range(len(tab)):
         tab[i][x] = 1
-    #horizontal
+    # horizontal
     for j in range(len(tab[0])):
         tab[y][j] = 1
 
@@ -54,9 +55,9 @@ def funcao_heuristica(tab):
     for i in range(len(tab)):
         for j in range(len(tab[0])):
             if tab[i][j] == 0:
-                cont_vazia+=1
-    #verifica distância até a borda:
-    numero_rainhas =  contar_rainhas(tab)
+                cont_vazia += 1
+    # verifica distância até a borda:
+    numero_rainhas = contar_rainhas(tab)
     return cont_vazia
 
 def contar_rainhas(tab):
@@ -64,58 +65,59 @@ def contar_rainhas(tab):
     for i in range(len(tab)):
         for j in range(len(tab[0])):
             if tab[i][j] == 2:
-                cont+=1
+                cont += 1
     return cont
 
 def printTab(tab):
     for i in range(len(tab)):
         print(tab[i])
 
-tab = [[0,0,0,0,0,0,0,0],
-       [0,0,0,0,0,0,0,0],
-       [0,0,0,0,0,0,0,0],
-       [0,0,0,0,0,0,0,0],
-       [0,0,0,0,0,0,0,0],
-       [0,0,0,0,0,0,0,0],
-       [0,0,0,0,0,0,0,0],
-       [0,0,0,0,0,0,0,0]]
+tab = [
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+]
 
-tab16 = [[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]]
+tab16 = [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+]
 
-tab4 = [[0,0,0,0],
-       [0,0,0,0],
-       [0,0,0,0],
-       [0,0,0,0]]
+tab4 = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
 
 tabuleiros = []
-n = 8 #numero de rainhas que se deseja posicionar
+n = 8  # numero de rainhas que se deseja posicionar
 while True:
     for i in range(len(tab)):
         for j in range(len(tab[0])):
-            if tab[i][j] == 0: # se for 0 -> filho
-                filho = copy.deepcopy(tab) # cria um clone do pai
+            if tab[i][j] == 0:  # se for 0 -> filho
+                filho = copy.deepcopy(tab)  # cria um clone do pai
                 preencher_vertical_horizontal(filho, i, j)
-                preencher_diagonais(filho, i , j)
+                preencher_diagonais(filho, i, j)
                 filho[i][j] = 2
                 tabuleiros.append(filho)
 
-    #agora vamos posicionar rainhas em posições com ataque para diminuir
-    #encontra melhor filho na lista
+    # agora vamos posicionar rainhas em posições com ataque para diminuir
+    # encontra melhor filho na lista
     maior_fe = 0
     melhor_filho = None
     indice_apagar = -1
@@ -126,13 +128,13 @@ while True:
             melhor_filho = tabuleiros[i]
             indice_apagar = i
     del tabuleiros[indice_apagar]
-    #depois do loop na matriz
+    # depois do loop na matriz
     tab = melhor_filho
     print("Melhor filho selecionado:")
     printTab(tab)
     nr = contar_rainhas(tab)
-    print("heurística:",maior_fe," rainhas:",nr)
-    #input("continuar")
-    if nr == n or len(tabuleiros)==0: #acabou preencheu tudo
+    print("heurística:", maior_fe, " rainhas:", nr)
+    # input("continuar")
+    if nr == n or len(tabuleiros) == 0:  # acabou preencheu tudo
         printTab(tab)
         break
